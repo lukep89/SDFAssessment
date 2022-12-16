@@ -21,6 +21,12 @@ public class Main {
         String csvName = args[0];
         String templateName = args[1];
 
+        // file name with .csv or .txt
+        String csvNameWithNoDir = csvName.replace(".csv", "");
+        // System.out.println("> file name without dir: " + csvNameWithNoDir + "\n");
+        String txtNameWithNoDir = templateName.replace(".txt", "");
+        // System.out.println("> file name without dir: " + csvNameWithNoDir + "\n");
+
         // System.out.printf("> filename: %s, template name: %s", csvName,
 
         Map<String, String> infoMap = new HashMap<>();
@@ -50,17 +56,25 @@ public class Main {
                 // System.out.println("> " + line +" \n");
                 String[] infoStrings = line.trim().split(",");
 
-                infoMap.replace("first_name", infoStrings[0]);
-                infoMap.replace("last_name", infoStrings[1]);
-                infoMap.replace("address", infoStrings[2]);
-                infoMap.replace("years", infoStrings[3]);
+                infoMap.put(header.get(0), infoStrings[0]); // first name || salutations
+                infoMap.put(header.get(1), infoStrings[1]); // last name
+                infoMap.put(header.get(2), infoStrings[2]); // address || package name
+                infoMap.put(header.get(3), infoStrings[3]); // years || price
 
                 // CREATE file - duplicate thankyou.txt (templateName, args[1]) and rename to
                 // fiestname.txt (harry.txt)
                 Path originalFile = Paths.get("task01/".concat(templateName));
                 String name = originalFile.getFileName().toString();
 
-                String copiedName = name.replace("thankyou", infoMap.get("first_name"));
+                String copiedName = "";
+                if (header.get(0).equalsIgnoreCase("first_name")) {
+                    copiedName = name.replace(txtNameWithNoDir,
+                            infoMap.get(header.get(0)).concat("_" + txtNameWithNoDir));
+
+                } else {
+                    copiedName = name.replace(txtNameWithNoDir,
+                            infoMap.get(header.get(1)).concat("_" + txtNameWithNoDir));
+                }
                 Path copiedFile = originalFile.resolveSibling(copiedName);
 
                 try {
@@ -77,11 +91,22 @@ public class Main {
                     FileWriter fw = new FileWriter(copiedFile.toString(), false);
                     BufferedWriter bw = new BufferedWriter(fw);
 
-                    bw.write(infoMap.get("address"));
-                    bw.write("\n\n");
-                    bw.write("Dear " + infoMap.get("first_name") + " " + infoMap.get("last_name"));
-                    bw.write("\n\n");
-                    bw.write("Thank you for staying with us over these " + infoMap.get("years") + " years");
+                    if (header.get(0).equalsIgnoreCase("first_name")) {
+                        bw.write(infoMap.get(header.get(2))); // .replaceAll("\n", "\\n")
+                        bw.write("\n\n");
+                        bw.write("Dear " + infoMap.get(header.get(0)) + " " + infoMap.get(header.get(1)));
+                        bw.write("\n\n");
+                        bw.write("Thank you for staying with us over these " + infoMap.get(header.get(3)) + " years");
+
+                    } else if (header.get(0).equalsIgnoreCase("salutations")) {
+                        bw.write("Dear " + infoMap.get(header.get(0)) + " " + infoMap.get(header.get(1)));
+                        bw.write("\n\n");
+                        bw.write("Thank you for your interest in our new" + infoMap.get(header.get(2)) + " package! ");
+                        bw.write("For the 2022 Spring promotion, you can sign up for the low low price of $ " + infoMap
+                                .get(header.get(3)) + " !");
+                        bw.write("\n\n");
+                        bw.write("Safe travels!");
+                    }
 
                     bw.close();
                     fw.close();
