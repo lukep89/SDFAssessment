@@ -1,9 +1,3 @@
-<<address>>
-
-Dear <<first_name>>,
-
-Thank you for staying with us over these <<years>> years.
-
 2311 North Los Robles Avenue\nPasadena
 
 Dear Sheldon Cooper

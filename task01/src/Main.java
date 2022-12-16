@@ -102,6 +102,7 @@ public class Main {
                         bw.write("Dear " + infoMap.get(header.get(0)) + " " + infoMap.get(header.get(1)));
                         bw.write("\n\n");
                         bw.write("Thank you for your interest in our new" + infoMap.get(header.get(2)) + " package! ");
+                        bw.write("\n");
                         bw.write("For the 2022 Spring promotion, you can sign up for the low low price of $ " + infoMap
                                 .get(header.get(3)) + " !");
                         bw.write("\n\n");
