@@ -34,6 +34,7 @@ public class Main {
             }
 
             else {
+                Float calulatedValue = 0f;
 
                 // for case if user key in "$last"
                 String[] modifiedTerm = new String[3];
@@ -55,8 +56,6 @@ public class Main {
 
                     Float modValue1 = Float.parseFloat(modifiedTerm[0]);
                     Float modValue2 = Float.parseFloat(modifiedTerm[2]);
-
-                    Float calulatedValue = 0f;
 
                     switch (modifiedTerm[1]) {
                         case "+":
@@ -93,7 +92,7 @@ public class Main {
                 Float value1 = Float.parseFloat(term[0]);
                 Float value2 = Float.parseFloat(term[2]);
 
-                Float calulatedValue = 0f;
+                // Float calulatedValue = 0f;
 
                 switch (term[1]) {
                     case "+":
